@@ -20,15 +20,29 @@ android {
             useSupportLibrary = true
         }
     }
+    android.signingConfigs {
+        create("release") {
+            storeFile = file("keystore.jks")
+            storePassword = "newapp"
+            keyAlias = "key0"
+            keyPassword = "newapp"
+            storeType = "jks"
+        }
+    }
+
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            multiDexEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -51,16 +65,16 @@ android {
 }
 
 dependencies {
-    implementation (libs.coil.compose)
+    implementation(libs.coil.compose)
 
 
-    implementation (libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.android)
 
 
-    implementation (libs.ui)
-    implementation (libs.androidx.material)
-    implementation (libs.androidx.lifecycle.runtime.ktx)
-    implementation (libs.androidx.activity.compose.v130)
+    implementation(libs.ui)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose.v130)
 
 
 
